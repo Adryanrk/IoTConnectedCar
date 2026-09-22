@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarSimulator.Models
+﻿namespace CarSimulator.Models
 {
-    internal class TelemetryData
+    public class TelemetryData
     {
+        public double Speed { get; set; }
+        public double Rpm { get; set; }
+        public double FuelLevel { get; set; }
+        public double EngineTemperature { get; set; }
     }
 }
