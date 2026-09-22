@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36414.22 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoTConnectedCar", "IoTConnectedCar\IoTConnectedCar.csproj", "{1E16D512-24F1-4FB2-9C56-593B03B615B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarSimulator", "IoTConnectedCar\CarSimulator.csproj", "{1E16D512-24F1-4FB2-9C56-593B03B615B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
