@@ -6,7 +6,7 @@ Console.WriteLine("IoT Connected Car Simulator");
 Console.WriteLine("==========================");
 Console.WriteLine();
 
-for (int i = 0; i < 10; i++)
+for (int i = 0; i < 25; i++)
 {
     var telemetry = car.GenerateTelemetry();
 
