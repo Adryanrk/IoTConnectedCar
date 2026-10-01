@@ -10,7 +10,17 @@ namespace CarSimulator
         private const int MinSpeed = 0;
         private const int MaxSpeed = 120;
 
+        private enum DrivingState
+        {
+            Accelerating,
+            Cruising,
+            Decelerating
+        }
+
         private readonly Random _random = new Random();
+
+        private DrivingState _drivingState = DrivingState.Accelerating;
+        private int _stateCounter = 0;
 
         private double _currentSpeed = 0;
         private double _currentRpm = IdleRpm;
@@ -19,9 +29,40 @@ namespace CarSimulator
 
         private void UpdateSpeed()
         {
-            int speedChange = _random.Next(-5, 11);
+            _stateCounter++;
 
-            _currentSpeed += speedChange;
+            switch (_drivingState)
+            {
+                case DrivingState.Accelerating:
+                    _currentSpeed += _random.Next(5, 11);
+
+                    if (_stateCounter >= 6 || _currentSpeed >= 80)
+                    {
+                        _drivingState = DrivingState.Cruising;
+                        _stateCounter = 0;
+                    }
+                    break;
+
+                case DrivingState.Cruising:
+                    _currentSpeed += _random.Next(-3, 4);
+
+                    if (_stateCounter >= 8)
+                    {
+                        _drivingState = DrivingState.Decelerating;
+                        _stateCounter = 0;
+                    }
+                    break;
+
+                case DrivingState.Decelerating:
+                    _currentSpeed -= _random.Next(5, 11);
+
+                    if (_stateCounter >= 6 || _currentSpeed <= 10)
+                    {
+                        _drivingState = DrivingState.Accelerating;
+                        _stateCounter = 0;
+                    }
+                    break;
+            }
 
             _currentSpeed = Math.Clamp(
                 _currentSpeed,
