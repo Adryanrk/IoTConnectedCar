@@ -28,5 +28,48 @@ namespace CarSimulator
                 MaxSpeed
             );
         }
+
+        private void UpdateRpm()
+        {
+            if (_currentSpeed == 0)
+            {
+                _currentRpm = IdleRpm;
+                return;
+            }
+
+            double targetRpm = IdleRpm + (_currentSpeed / MaxSpeed) * (MaxRpm - IdleRpm);
+
+            int variation = _random.Next(-200, 201);
+
+            _currentRpm = targetRpm + variation;
+
+            _currentRpm = Math.Clamp(
+                _currentRpm,
+                IdleRpm,
+                MaxRpm
+            );
+        }
+
+        private void UpdateFuelLevel()
+        {
+            double fuelConsumption;
+
+            if (_currentSpeed == 0)
+            {
+                fuelConsumption = 0.01;
+            }
+            else
+            {
+                fuelConsumption = 0.02 + (_currentRpm / MaxRpm) * 0.05;
+            }
+
+            _currentFuelLevel -= fuelConsumption;
+
+            _currentFuelLevel = Math.Clamp(
+                _currentFuelLevel,
+                0,
+                100
+            );
+        }
     }
 }
