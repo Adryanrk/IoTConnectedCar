@@ -1,4 +1,5 @@
 ﻿using System;
+using CarSimulator.Models;
 
 namespace CarSimulator
 {
@@ -70,6 +71,47 @@ namespace CarSimulator
                 0,
                 100
             );
+        }
+
+        private void UpdateEngineTemperature()
+        {
+            double targetTemperature;
+
+            if (_currentSpeed == 0)
+            {
+                targetTemperature = 80.0;
+            }
+            else
+            {
+                targetTemperature = 80.0 + (_currentRpm / MaxRpm) * 20.0;
+            }
+
+            double temperatureChange =
+                (targetTemperature - _currentEngineTemperature) * 0.1;
+
+            _currentEngineTemperature += temperatureChange;
+
+            _currentEngineTemperature = Math.Clamp(
+                _currentEngineTemperature,
+                80.0,
+                100.0
+            );
+        }
+
+        public TelemetryData GenerateTelemetry()
+        {
+            UpdateSpeed();
+            UpdateRpm();
+            UpdateFuelLevel();
+            UpdateEngineTemperature();
+
+            return new TelemetryData
+            {
+                Speed = _currentSpeed,
+                Rpm = _currentRpm,
+                FuelLevel = _currentFuelLevel,
+                EngineTemperature = _currentEngineTemperature
+            };
         }
     }
 }
