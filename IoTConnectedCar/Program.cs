@@ -1,5 +1,17 @@
 ﻿using CarSimulator;
 
+string? writeApiKey =
+    Environment.GetEnvironmentVariable("THINGSPEAK_WRITE_API_KEY");
+
+if (string.IsNullOrWhiteSpace(writeApiKey))
+{
+    Console.WriteLine("ThingSpeak Write API Key was not found.");
+    return;
+}
+
+Console.WriteLine("ThingSpeak configuration loaded successfully.");
+Console.WriteLine();
+
 Car car = new Car();
 
 Console.WriteLine("IoT Connected Car Simulator");
