@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarAnalyzer.Models
+﻿namespace CarAnalyzer.Models
 {
-    internal class TelemetryData
+    public class TelemetryData
     {
+        public DateTime CreatedAt { get; set; }
+
+        public double? Speed { get; set; }
+
+        public double? Rpm { get; set; }
+
+        public double? FuelLevel { get; set; }
+
+        public double? EngineTemperature { get; set; }
     }
 }
