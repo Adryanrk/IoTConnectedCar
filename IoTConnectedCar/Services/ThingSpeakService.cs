@@ -51,8 +51,9 @@ namespace CarSimulator.Services
 
                 return result != "0";
             }
-            catch (HttpRequestException)
+            catch (HttpRequestException ex)
             {
+                Console.WriteLine($"HTTP error: {ex.Message}");
                 return false;
             }
         }
