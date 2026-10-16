@@ -1,4 +1,25 @@
-﻿Console.WriteLine("IoT Connected Car Analyzer");
+﻿using CarAnalyzer.Services;
+
+string? readApiKey =
+    Environment.GetEnvironmentVariable("THINGSPEAK_READ_API_KEY");
+
+string? channelId =
+    Environment.GetEnvironmentVariable("THINGSPEAK_CHANNEL_ID");
+
+if (string.IsNullOrWhiteSpace(readApiKey) ||
+    string.IsNullOrWhiteSpace(channelId))
+{
+    Console.WriteLine("ThingSpeak configuration is missing.");
+    return;
+}
+
+ThingSpeakService thingSpeakService =
+    new ThingSpeakService(readApiKey, channelId);
+
+Console.WriteLine("ThingSpeak configuration loaded successfully.");
+Console.WriteLine();
+
+Console.WriteLine("IoT Connected Car Analyzer");
 Console.WriteLine("==========================");
 Console.WriteLine();
 
@@ -14,6 +35,8 @@ while (running)
     Console.Write("Select an option: ");
     string? choice = Console.ReadLine();
 
+    Console.WriteLine();
+
     switch (choice)
     {
         case "1":
@@ -21,7 +44,12 @@ while (running)
             break;
 
         case "2":
-            Console.WriteLine("Analyzing the last 100 data points...");
+            Console.WriteLine("Fetching the last 100 data points...");
+
+            var telemetryList =
+                await thingSpeakService.GetLast100EntriesAsync();
+
+            Console.WriteLine($"Retrieved {telemetryList.Count} data points.");
             break;
 
         case "0":
