@@ -41,7 +41,14 @@ while (running)
     switch (choice)
     {
         case "1":
-            Console.WriteLine("Analyzing telemetry from the last 24 hours...");
+            Console.WriteLine("Fetching telemetry from the last 24 hours...");
+
+            var last24Hours =
+                await thingSpeakService.GetLast24HoursAsync();
+
+            Console.WriteLine($"Retrieved {last24Hours.Count} data points.");
+
+            TelemetryAnalyzer.Analyze(last24Hours);
             break;
 
         case "2":
