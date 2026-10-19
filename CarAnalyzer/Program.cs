@@ -1,4 +1,5 @@
 ﻿using CarAnalyzer.Services;
+using CarAnalyzer.Analysis;
 
 string? readApiKey =
     Environment.GetEnvironmentVariable("THINGSPEAK_READ_API_KEY");
@@ -50,6 +51,8 @@ while (running)
                 await thingSpeakService.GetLast100EntriesAsync();
 
             Console.WriteLine($"Retrieved {telemetryList.Count} data points.");
+
+            TelemetryAnalyzer.Analyze(telemetryList);
             break;
 
         case "0":
