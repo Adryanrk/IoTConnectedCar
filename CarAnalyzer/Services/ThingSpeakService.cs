@@ -22,6 +22,20 @@ namespace CarAnalyzer.Services
                 $"https://api.thingspeak.com/channels/{_channelId}/feeds.json" +
                 $"?api_key={_readApiKey}&results=100";
 
+            return await GetTelemetryAsync(url);
+        }
+
+        public async Task<List<TelemetryData>> GetLast24HoursAsync()
+        {
+            string url =
+                $"https://api.thingspeak.com/channels/{_channelId}/feeds.json" +
+                $"?api_key={_readApiKey}&days=1";
+
+            return await GetTelemetryAsync(url);
+        }
+
+        private async Task<List<TelemetryData>> GetTelemetryAsync(string url)
+        {
             try
             {
                 HttpResponseMessage response =
