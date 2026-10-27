@@ -29,7 +29,7 @@ namespace CarAnalyzer.Services
         {
             string url =
                 $"https://api.thingspeak.com/channels/{_channelId}/feeds.json" +
-                $"?api_key={_readApiKey}&days=1";
+                $"?api_key={_readApiKey}&days=1&results=8000";
 
             return await GetTelemetryAsync(url);
         }
