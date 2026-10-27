@@ -46,14 +46,20 @@ namespace CarSimulator.Services
                     return false;
                 }
 
-                string result =
-                    await response.Content.ReadAsStringAsync();
+                string result = await response.Content.ReadAsStringAsync();
 
-                return result != "0";
+                return int.TryParse(result.Trim(), out int entryId) && entryId > 0;
             }
+
             catch (HttpRequestException ex)
             {
                 Console.WriteLine($"HTTP error: {ex.Message}");
+                return false;
+            }
+
+            catch (TaskCanceledException ex)
+            {
+                Console.WriteLine($"Request timed out or was canceled: {ex.Message}");
                 return false;
             }
         }
