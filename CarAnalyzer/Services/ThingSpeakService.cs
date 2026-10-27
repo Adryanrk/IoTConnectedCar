@@ -73,9 +73,24 @@ namespace CarAnalyzer.Services
                 Console.WriteLine($"HTTP error: {ex.Message}");
                 return new List<TelemetryData>();
             }
+            catch (TaskCanceledException ex)
+            {
+                Console.WriteLine($"Request timed out or was canceled: {ex.Message}");
+                return new List<TelemetryData>();
+            }
             catch (JsonException ex)
             {
                 Console.WriteLine($"JSON error: {ex.Message}");
+                return new List<TelemetryData>();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.WriteLine($"Missing JSON property: {ex.Message}");
+                return new List<TelemetryData>();
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.WriteLine($"Invalid data format: {ex.Message}");
                 return new List<TelemetryData>();
             }
         }
