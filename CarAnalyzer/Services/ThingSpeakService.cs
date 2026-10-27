@@ -16,7 +16,7 @@ namespace CarAnalyzer.Services
             _channelId = channelId;
         }
 
-        public async Task<List<TelemetryData>> GetLast100EntriesAsync()
+        public async Task<List<TelemetryData>?> GetLast100EntriesAsync()
         {
             string url =
                 $"https://api.thingspeak.com/channels/{_channelId}/feeds.json" +
@@ -25,7 +25,7 @@ namespace CarAnalyzer.Services
             return await GetTelemetryAsync(url);
         }
 
-        public async Task<List<TelemetryData>> GetLast24HoursAsync()
+        public async Task<List<TelemetryData>?> GetLast24HoursAsync()
         {
             string url =
                 $"https://api.thingspeak.com/channels/{_channelId}/feeds.json" +
@@ -34,7 +34,7 @@ namespace CarAnalyzer.Services
             return await GetTelemetryAsync(url);
         }
 
-        private async Task<List<TelemetryData>> GetTelemetryAsync(string url)
+        private async Task<List<TelemetryData>?> GetTelemetryAsync(string url)
         {
             try
             {
@@ -71,27 +71,27 @@ namespace CarAnalyzer.Services
             catch (HttpRequestException ex)
             {
                 Console.WriteLine($"HTTP error: {ex.Message}");
-                return new List<TelemetryData>();
+                return null;
             }
             catch (TaskCanceledException ex)
             {
                 Console.WriteLine($"Request timed out or was canceled: {ex.Message}");
-                return new List<TelemetryData>();
+                return null;
             }
             catch (JsonException ex)
             {
                 Console.WriteLine($"JSON error: {ex.Message}");
-                return new List<TelemetryData>();
+                return null;
             }
             catch (KeyNotFoundException ex)
             {
                 Console.WriteLine($"Missing JSON property: {ex.Message}");
-                return new List<TelemetryData>();
+                return null;
             }
             catch (InvalidOperationException ex)
             {
                 Console.WriteLine($"Invalid data format: {ex.Message}");
-                return new List<TelemetryData>();
+                return null;
             }
         }
 

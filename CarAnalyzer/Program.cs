@@ -46,6 +46,12 @@ while (running)
             var last24Hours =
                 await thingSpeakService.GetLast24HoursAsync();
 
+            if (last24Hours == null)
+            {
+                Console.WriteLine("Failed to retrieve telemetry data.");
+                break;
+            }
+
             Console.WriteLine($"Retrieved {last24Hours.Count} data points.");
 
             TelemetryAnalyzer.Analyze(last24Hours);
@@ -56,6 +62,12 @@ while (running)
 
             var telemetryList =
                 await thingSpeakService.GetLast100EntriesAsync();
+
+            if (telemetryList == null)
+            {
+                Console.WriteLine("Failed to retrieve telemetry data.");
+                break;
+            }
 
             Console.WriteLine($"Retrieved {telemetryList.Count} data points.");
 
